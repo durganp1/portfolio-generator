@@ -1,16 +1,12 @@
 
+// third party module
 const inquirer = require('inquirer');
-// const fs = require('fs');
-// const generatePage = require('./src/page-template');
+// node module
+const fs = require('fs');
+// local module
+const generatePage = require('./src/page-template');
 
-// const pageHTML = generatePage(name, github);
 
-
-
-// fs.writeFile('./index.html', pageHTML, err => {
-//     if (err) throw err;
-//     console.log('Portfolio completed!');
-// });
 
 const promptUser = () => {
     return inquirer.prompt([
@@ -130,6 +126,7 @@ const promptProject = portfolioData => {
                 defaul: false
             }
         ])
+        // once first project data is input, decide if there are more projects.
         .then(projectData => {
             portfolioData.projects.push(projectData);
             if (projectData.confirmAddProject) {
@@ -139,9 +136,18 @@ const promptProject = portfolioData => {
             }
         });
 };
+  
 
+// call function to gather user info and retuns a promise
 promptUser()
-    .then(promptProject)
+// after user info call function to gather project info
+   .then(promptProject)
+    // after all data collected send to page-template.js through generatePage local module
     .then(portfolioData => {
-        console.log(portfolioData);
-    });
+        const pageHTML = generatePage(portfolioData); 
+
+        fs.writeFile('./index.html', pageHTML, err => {
+            if (err) throw err;
+            console.log('Portfolio completed!');
+        });
+   });
