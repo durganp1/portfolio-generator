@@ -25,7 +25,7 @@ const generateProjects = projectsArr => {
                     return `
                     <div class="col-12 mb-2 bg-dark text-light p-3">
                         <h3 class="portfolio-item-title text-light">${name}</h3>
-                        <h5 class="portfolio-laguages">
+                        <h5 class="portfolio-languages">
                             Built With:
                             ${languages.join(', ')}
                         </h5>
